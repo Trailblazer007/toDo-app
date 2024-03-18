@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
+import { FaCheck } from "react-icons/fa";
 
 export default function Home() {
   const [isCompleteScreen, setIsCompleteScreen] = useState(false);
@@ -66,9 +68,18 @@ export default function Home() {
           </div>
 
           {/* todo list */}
-          <div className="todo-list-item text-white mt-4">
-            <h3>Task 1</h3>
-            <p>Description</p>
+          <div className="todo-list ">
+            <div className="todo-list-item bg-gray-900 p-6 px-3 mt-4 flex justify-between items-center ">
+              <div className="shadow-4xl text-gray-500 flex flex-col mb-3">
+                <h3 className="font-bold text-2xl text-green-600">Task 1</h3>
+                <p>Description</p>
+              </div>
+
+              <div className="icons flex gap-2 text-4xl cursor-pointer">
+                <AiOutlineDelete className="delete-icon text-white hover:text-red-600" />
+                <FaCheck className="check-icon text-green-600 hover:text-green-800" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
