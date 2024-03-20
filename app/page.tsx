@@ -3,8 +3,27 @@ import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa";
 
+type TodoItem = {
+  title: string;
+  description: string;
+};
+
 export default function Home() {
   const [isCompleteScreen, setIsCompleteScreen] = useState(false);
+  const [allTodos, setAllTodos] = useState<TodoItem[]>([]);
+  const [newTitle, setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+
+  const handleAddTodo = () => {
+    let newTodoItem: TodoItem = {
+      title: newTitle,
+      description: newDescription,
+    };
+
+    let updatedTodoArr = [...allTodos];
+    updatedTodoArr.push(newTodoItem);
+    setAllTodos(updatedTodoArr);
+  };
 
   return (
     // Wrapper
@@ -21,6 +40,8 @@ export default function Home() {
               <div className="">
                 <label className="mb-2 text-white font-bold">Title:</label>
                 <input
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
                   className="px-2 border-transparent outline-none w-64 focus-within:outline focus-within:outline-[rgba(0,230,122)]"
                   type="text"
                   placeholder="What's the title of your To Do?"
@@ -32,6 +53,8 @@ export default function Home() {
                   Description:
                 </label>
                 <input
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
                   className="px-2 border-transparent outline-none w-64 focus-within:outline focus-within:outline-[rgba(0,230,122)]"
                   type="text"
                   placeholder="What's the task description?"
@@ -39,7 +62,11 @@ export default function Home() {
               </div>
 
               <div className="w-full">
-                <button className="primaryBtn text-white capitalize bg-green-600 p-1 px-2 rounded-sm hover:bg-green-800">
+                <button
+                  type="button"
+                  onClick={handleAddTodo}
+                  className="primaryBtn text-white capitalize bg-green-600 p-1 px-2 rounded-sm hover:bg-green-800"
+                >
                   Add
                 </button>
               </div>
@@ -68,8 +95,8 @@ export default function Home() {
           </div>
 
           {/* todo list */}
-          <div className="todo-list ">
-            <div className="todo-list-item bg-gray-900 p-6 px-3 mt-4 flex justify-between items-center ">
+          <div className="todo-list">
+            {/* <div className="todo-list-item bg-gray-900 p-6 px-3 mt-4 flex justify-between items-center ">
               <div className="shadow-4xl text-gray-500 flex flex-col mb-3">
                 <h3 className="font-bold text-2xl text-green-600">Task 1</h3>
                 <p>Description</p>
@@ -79,7 +106,28 @@ export default function Home() {
                 <AiOutlineDelete className="delete-icon text-white hover:text-red-600" />
                 <FaCheck className="check-icon text-green-600 hover:text-green-800" />
               </div>
-            </div>
+            </div> */}
+
+            {allTodos.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="todo-list-item bg-gray-900 p-6 px-3 mt-4 flex justify-between items-center "
+                >
+                  <div className="shadow-4xl text-gray-500 flex flex-col mb-3">
+                    <h3 className="font-bold text-2xl text-green-600">
+                      {item.title}
+                    </h3>
+                    <p>{item.description}</p>
+                  </div>
+
+                  <div className="icons flex gap-2 text-4xl cursor-pointer">
+                    <AiOutlineDelete className="delete-icon text-white hover:text-red-600" />
+                    <FaCheck className="check-icon text-green-600 hover:text-green-800" />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
