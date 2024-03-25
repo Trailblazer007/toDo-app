@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa";
 
@@ -33,6 +33,13 @@ export default function Home() {
     localStorage.setItem("todolist", JSON.stringify(reducedTodo));
     setAllTodos(reducedTodo);
   };
+
+  useEffect(() => {
+    let savedTodo = JSON.parse(localStorage.getItem("todolist") as string);
+    if (savedTodo) {
+      setAllTodos(savedTodo);
+    }
+  }, []);
 
   return (
     // Wrapper
