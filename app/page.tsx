@@ -23,6 +23,15 @@ export default function Home() {
     let updatedTodoArr = [...allTodos];
     updatedTodoArr.push(newTodoItem);
     setAllTodos(updatedTodoArr);
+    localStorage.setItem("todoList", JSON.stringify(updatedTodoArr));
+  };
+
+  const handleDeleteTodo = (index: number) => {
+    let reducedTodo = [...allTodos];
+    reducedTodo.splice(index);
+
+    localStorage.setItem("todolist", JSON.stringify(reducedTodo));
+    setAllTodos(reducedTodo);
   };
 
   return (
@@ -96,18 +105,6 @@ export default function Home() {
 
           {/* todo list */}
           <div className="todo-list">
-            {/* <div className="todo-list-item bg-gray-900 p-6 px-3 mt-4 flex justify-between items-center ">
-              <div className="shadow-4xl text-gray-500 flex flex-col mb-3">
-                <h3 className="font-bold text-2xl text-green-600">Task 1</h3>
-                <p>Description</p>
-              </div>
-
-              <div className="icons flex gap-2 text-4xl cursor-pointer">
-                <AiOutlineDelete className="delete-icon text-white hover:text-red-600" />
-                <FaCheck className="check-icon text-green-600 hover:text-green-800" />
-              </div>
-            </div> */}
-
             {allTodos.map((item, index) => {
               return (
                 <div
@@ -122,8 +119,15 @@ export default function Home() {
                   </div>
 
                   <div className="icons flex gap-2 text-4xl cursor-pointer">
-                    <AiOutlineDelete className="delete-icon text-white hover:text-red-600" />
-                    <FaCheck className="check-icon text-green-600 hover:text-green-800" />
+                    <AiOutlineDelete
+                      onClick={() => handleDeleteTodo(index)}
+                      title="Delete?"
+                      className="delete-icon text-white hover:text-red-600"
+                    />
+                    <FaCheck
+                      title="Complete?"
+                      className="check-icon text-green-600 hover:text-green-800"
+                    />
                   </div>
                 </div>
               );
